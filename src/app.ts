@@ -9,9 +9,4 @@ createServer(function (req, res) {
     res.writeHead(404)
     res.end()
   }
-  // res.writeHead(200, {
-  //   'content-type': 'text/plain',
-  // })
-  // res.write('hello nodejs')
-  // res.end()
 }).listen(config.port)
