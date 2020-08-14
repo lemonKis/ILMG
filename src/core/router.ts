@@ -98,7 +98,7 @@ class Router {
             files: data.files,
             response,
           }
-          callObj.func.call(this, ctx).catch((e: any) => {
+          callObj.func.call(this, ctx, req, res).catch((e: any) => {
             // 全局异常捕获
             const errMsg = typeof e === 'string' ? e : '服务器异常'
             response({ status: 200, data: error(errMsg) })

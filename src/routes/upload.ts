@@ -1,12 +1,14 @@
-import fs from 'fs'
-import imageType from 'image-type'
 import md5 from 'md5'
 import Router, { METHOD, Context } from '../core/router'
 import { success } from '../core/data'
 import { getEncryptObj, getEncryptStr } from '../core/cipher'
 import config from '../config'
 import { saveFileToTarget } from '../core/dir'
+import { imgTypeCheck } from '../core/gm'
 
+/**
+ * 图片上传路由
+ */
 const r = new Router()
 
 // 文件上传body
@@ -45,32 +47,21 @@ r.use(
     if (body.secret !== secret) throw '授权异常'
 
     // 4、验证file类型是否合法
-    let typeResult = null
-    let fileBuffer = null
-    try {
-      const tempPath = files.file.path
-      fileBuffer = fs.readFileSync(tempPath)
-      typeResult = imageType(fileBuffer)
-    } catch (e) {
-      console.log(e)
-    }
-    if (!fileBuffer) throw '文件内容异常'
-
-    if (!typeResult || !typeResult.ext) throw '文件错误'
-
-    if (!typeResult.mime || !~config.whiteMimes.indexOf(typeResult.mime))
-      throw '非法文件MIME类型'
+    const { buffer, ext } = imgTypeCheck(files.file.path)
 
     // 5、保存原图片，返回图片路径
-    const hash = md5(fileBuffer)
-    const fileName = `${hash.substr(0, 12)}.${typeResult.ext}`
+    const hash = md5(buffer)
+    const fileName = `${Buffer.from(hash)
+      .toString('base64')
+      .substr(0, 12)}.${ext}`
     const dt = new Date()
     const y = dt.getFullYear()
     const m = dt.getMonth() + 1
     const d = dt.getDate()
     const folder = `/${y}-${m > 10 ? m : '0' + m}/d${d > 10 ? d : '0' + d}/`
     try {
-      saveFileToTarget(files.file, `${config.filePath}${folder}`, fileName)
+      const fullFloder = `${config.filePath}${config.originImgDir}${folder}`
+      saveFileToTarget(files.file, fullFloder, fileName)
     } catch (e) {
       console.log(e)
       throw '文件写入异常'
