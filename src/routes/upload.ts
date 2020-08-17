@@ -51,9 +51,7 @@ r.use(
 
     // 5、保存原图片，返回图片路径
     const hash = md5(buffer)
-    const fileName = `${Buffer.from(hash)
-      .toString('base64')
-      .substr(0, 12)}.${ext}`
+    const fileName = `${hash.substr(0, 12)}.${ext}`
     const dt = new Date()
     const y = dt.getFullYear()
     const m = dt.getMonth() + 1
