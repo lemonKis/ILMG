@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "build": "rm -rf dist && tsc",
+    "package": "rm -rf dist.zip && npm run build && zip -r dist.zip ./dist package.json package-lock.json"
   },
   "author": "",
   "license": "ISC",

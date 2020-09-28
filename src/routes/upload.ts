@@ -40,7 +40,7 @@ r.use(
 
     // 2、验证时间是否满足要求，1分钟内可上传
     const timestamp = Number(body.timestamp)
-    if (isNaN(timestamp) || Date.now() - timestamp > 60000) throw '验证过期'
+    if (isNaN(timestamp) || Date.now() - timestamp > 120000) throw '验证过期'
 
     // 3、验证加密信息是否正确
     const secret = getEncryptStr(body.nonceStr, timestamp)
