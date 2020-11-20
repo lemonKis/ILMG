@@ -11,7 +11,10 @@ export interface ResponseOptions {
  * 结果输出函数，外部绑定this给ServerResponse
  */
 export function setResponse(this: ServerResponse, options: ResponseOptions) {
-  this.writeHead(options.status || 200, options.headers || {})
+  const headers = options.headers || {}
+  // 通用header头设置
+  !headers['content-type'] && (headers['content-type'] = 'application/json')
+  this.writeHead(options.status || 200, headers)
   this.write(options.data || '')
   this.end()
 }
