@@ -11,7 +11,7 @@ server {
     root /home/img/files;
 
     location ~ /cache/(.*) {
-        try_files /cache/$1 /cache?url=/$1;
+        try_files /cache/$1 /img/cache?url=/$1;
     }
 
     location = /cache {
