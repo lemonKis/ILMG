@@ -10,7 +10,7 @@ server {
 
     root /home/img/files;
 
-    location ~ /imgs/(.*) {
+    location ~ /cache/(.*) {
         try_files /cache/$1 /cache?url=/$1;
     }
 
