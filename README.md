@@ -19,7 +19,7 @@ server {
         proxy_pass http://127.0.0.1:3011/img/cache;
     }
     
-    location = /upload/secret {
+    location = /secret {
         # 对内服务，获取上传密钥
         proxy_pass http://127.0.0.1:3012/upload/secret;
     }
