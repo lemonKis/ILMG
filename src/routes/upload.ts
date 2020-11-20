@@ -35,7 +35,7 @@ r.use(
     const body = ctx.body as UploadBody
     const files = ctx.files as UploadFiles
     // 1、验证参数是否都存在
-    if (!body.timestamp && body.nonceStr && body.secret && files.file)
+    if (!(body.timestamp && body.nonceStr && body.secret && files.file))
       throw '请求参数异常'
 
     // 2、验证时间是否满足要求，1分钟内可上传
