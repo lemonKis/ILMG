@@ -11,12 +11,17 @@ server {
     root /home/img/files;
 
     location ~ /cache/(.*) {
-        try_files /cache/$1 /img/cache?url=/$1;
+        try_files /cache/$1 /cache?url=/$1;
     }
 
     location = /cache {
         # 对内服务，生成缩略图
         proxy_pass http://127.0.0.1:3011/img/cache;
+    }
+    
+    location = /upload/secret {
+        # 对内服务，获取上传密钥
+        proxy_pass http://127.0.0.1:3012/upload/secret;
     }
 
     location = /upload {
