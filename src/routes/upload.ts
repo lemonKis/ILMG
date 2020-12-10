@@ -56,7 +56,7 @@ r.use(
     const y = dt.getFullYear()
     const m = dt.getMonth() + 1
     const d = dt.getDate()
-    const folder = `/${y}-${m > 10 ? m : '0' + m}/d${d > 10 ? d : '0' + d}/`
+    const folder = `/${y}-${m >= 10 ? m : '0' + m}/d${d >= 10 ? d : '0' + d}/`
     try {
       const fullFloder = `${config.filePath}${config.originImgDir}${folder}`
       saveFileToTarget(files.file, fullFloder, fileName)
